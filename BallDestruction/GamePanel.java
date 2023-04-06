@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
- * This class contains the paintable objects such as the enemies, turret, and
- * missile. It also keeps track of the total score and collisions.
+ * Contains the turret, list of enemies and missiles, and necessary methods for
+ * the game.
  * 
- * @author kleinjb
+ * @author Justin Klein
  */
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
@@ -41,11 +41,6 @@ public class GamePanel extends JPanel {
     private Turret turret;
 
     /**
-     * boolean to only paint the turret once.
-     */
-    private boolean once = false;
-
-    /**
      * GamePanel constructor.
      */
     public GamePanel() {
@@ -64,7 +59,6 @@ public class GamePanel extends JPanel {
      * Paint every single object.
      */
     public void paintComponent(Graphics g) {
-        // super.paintComponent(g);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
         for (int i = 0; i < enemyList.size(); i++) {
             enemyList.get(i).paintComponent(g);
@@ -72,11 +66,7 @@ public class GamePanel extends JPanel {
         for (int i = 0; i < missileList.size(); i++) {
             missileList.get(i).paintComponent(g);
         }
-        if (!once) {
-            turret.paintComponent(g);
-            // once = true;
-        }
-
+        turret.paintComponent(g);
     }
 
     /**
@@ -123,7 +113,7 @@ public class GamePanel extends JPanel {
     /**
      * Method detects the collision of the missile and all the enemies. This is
      * done by drawing invisible rectangles around the enemies and missiles, if
-     * they intersect, then they collide. DON'T MODIFY
+     * they intersect, then they collide.
      */
     public void detectCollision() {
         try {
@@ -137,9 +127,9 @@ public class GamePanel extends JPanel {
                         enemyList.get(i).processCollision(enemyList, i);
                         missileList.remove(j);
                         if (enemyList.get(i) instanceof BigEnemy) {
-                            totalScore += 100;
+                            totalScore += 50;
                         } else {
-                            totalScore += 150;
+                            totalScore += 100;
                         }
                     }
                 }

@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
@@ -14,7 +15,7 @@ import javax.swing.Timer;
 /**
  * The top-level Frame class for the Game.
  * 
- * @author kleinjb
+ * @author Justin Klein
  */
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame {
@@ -31,6 +32,14 @@ public class GameFrame extends JFrame {
     private JLabel scoreLabel;
 
     /**
+     * A label showing how much ammo the user has
+     * 
+     * @see shotsFired
+     * @see numAllowed
+     */
+    private JLabel ammo;
+
+    /**
      * The remaining number of calls to the gameStep method before a new enemy
      * is automatically added to the game.
      */
@@ -41,6 +50,10 @@ public class GameFrame extends JFrame {
      */
     private static int shotsFired;
 
+    /**
+     * The number of missiles the user is allowed to fire
+     */
+    private static final int ALLOWED = 10;
     /**
      * A button that allows the user to fire a missile.
      */
@@ -59,7 +72,8 @@ public class GameFrame extends JFrame {
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
         panel = new GamePanel();
-        scoreLabel = new JLabel("" + panel.getTotalScore());
+        scoreLabel = new JLabel("Score: " + panel.getTotalScore());
+        ammo = new JLabel("Shots Fired: " + shotsFired / ALLOWED);
         fireButton = new JButton("Shoot the enemy!");
         fireButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,9 +84,13 @@ public class GameFrame extends JFrame {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        c.add(scoreLabel, BorderLayout.NORTH);
+        panel.add(scoreLabel);
+        scoreLabel.setForeground(Color.WHITE);
         c.add(panel, BorderLayout.CENTER);
         c.add(fireButton, BorderLayout.SOUTH);
+        panel.add(ammo);
+        ammo.setForeground(Color.WHITE);
+        ammo.setHorizontalAlignment(JLabel.CENTER);
         setTitle("Ball Destruction!");
         enemyGenerationCounter = 0;
         shotsFired = 0;
@@ -81,7 +99,9 @@ public class GameFrame extends JFrame {
     private void gameStep() {
         panel.detectCollision();
         int score = panel.getTotalScore();
-        scoreLabel.setText(Integer.toString(score));
+        scoreLabel.setText("Score: " + Integer.toString(score));
+        ammo.setText("Shots Fired: " + Integer.toString(shotsFired) + " / "
+                + Integer.toString(ALLOWED));
         panel.move();
         panel.repaint();
         endOfGame(score);
@@ -93,7 +113,7 @@ public class GameFrame extends JFrame {
     }
 
     public static void endOfGame(int score) {
-        if (shotsFired > 10) {
+        if (shotsFired / ALLOWED == 1) {
             if (score >= 1000) {
                 JOptionPane.showMessageDialog(null,
                         "You Win!",

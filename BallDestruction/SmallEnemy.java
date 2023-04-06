@@ -4,8 +4,7 @@ import java.util.ArrayList;
 /**
  * A class to represent the small enemies in the game.
  * 
- * @author kleinjb
- *
+ * @author Justin Klein
  */
 public class SmallEnemy extends Enemy {
 
@@ -17,7 +16,7 @@ public class SmallEnemy extends Enemy {
      */
     public SmallEnemy(int panelWidth, int panelHeight) {
         super((int) Math.random() * 700,
-                (int) Math.random() * 500, 30, 30, 3);
+                (int) Math.random() * 500, 25, 25, 3);
         float r = (float) Math.random();
         float g = (float) Math.random();
         float b = (float) Math.random();
@@ -51,7 +50,6 @@ public class SmallEnemy extends Enemy {
         float b = (float) Math.random();
         Color c = new Color(r, g, b);
         this.setEnemyColor(c);
-
     }
 
     /**

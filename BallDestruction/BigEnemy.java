@@ -4,8 +4,7 @@ import java.util.ArrayList;
 /**
  * A class that describes the big enemies in the game
  * 
- * @author kleinjb
- *
+ * @author Justin Klein
  */
 public class BigEnemy extends Enemy {
 
@@ -17,7 +16,7 @@ public class BigEnemy extends Enemy {
      */
     public BigEnemy(int panelWidth, int panelHeight) {
         super((int) Math.random() * 700,
-                (int) Math.random() * 500, 56, 56, 4);
+                (int) Math.random() * 500, 50, 50, 4);
         float r = (float) Math.random();
         float g = (float) Math.random();
         float b = (float) Math.random();
